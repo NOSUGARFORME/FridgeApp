@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FridgeApp.Application\FridgeApp.Application.csproj" />
+    <ProjectReference Include="..\FridgeApp.Shared.Abstractions\FridgeApp.Shared.Abstractions.csproj" />
+    <ProjectReference Include="..\FridgeApp.Shared\FridgeApp.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
