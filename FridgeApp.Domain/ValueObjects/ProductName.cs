@@ -2,11 +2,11 @@ using FridgeApp.Domain.Exceptions;
 
 namespace FridgeApp.Domain.ValueObjects
 {
-    public record FridgeProductName
+    public record ProductName
     {
         public string Value { get; }
 
-        public FridgeProductName(string value)
+        public ProductName(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -16,10 +16,10 @@ namespace FridgeApp.Domain.ValueObjects
             Value = value;
         }
 
-        public static implicit operator string(FridgeProductName name)
+        public static implicit operator string(ProductName name)
             => name.Value;
 
-        public static implicit operator FridgeProductName(string name)
+        public static implicit operator ProductName(string name)
             => new(name);
     }
 }

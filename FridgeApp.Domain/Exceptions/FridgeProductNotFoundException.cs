@@ -2,10 +2,10 @@ using FridgeApp.Shared.Abstractions.Exceptions;
 
 namespace FridgeApp.Domain.Exceptions
 {
-    public class FridgeProductNotFoundException : FridgeException
+    public class ProductNotFoundException : FridgeException
     {
-        public FridgeProductNotFoundException(string productName) 
-            : base($"Fridge product '{productName}' was not found.")
+        public ProductNotFoundException(string productName) 
+            : base($"Product '{productName}' was not found.")
         {
         }
     }

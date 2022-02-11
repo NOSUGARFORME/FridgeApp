@@ -1,20 +1,34 @@
+using System;
 using FridgeApp.Domain.ValueObjects;
 using FridgeApp.Shared.Abstractions.Domain;
 
 namespace FridgeApp.Domain.Entities
 {
-    public class FridgeProduct : AggregateRoot<FridgeProductId>
+    public class FridgeProduct : Entity<Guid>
     {
-        public FridgeProductName Name { get; }
-        public FridgeProductQuantity Quantity { get; }
-        public FridgeProductQuantity DefaultQuantity { get; }
+        public ProductQuantity Quantity { get; private set; }
+        public ProductId ProductId { get; private set; }
+        public Product Product { get; private set; }
+        public Fridge Fridge { get; private set; }
+        public FridgeId FridgeId { get; private set; }
 
-        internal FridgeProduct(FridgeProductId id, FridgeProductName name, FridgeProductQuantity quantity, FridgeProductQuantity defaultQuantity)
+        private FridgeProduct() { }
+        
+        internal FridgeProduct(Fridge fridge, Product product, ProductQuantity quantity)
         {
-            Id = id;
-            Name = name;
+            Fridge = fridge;
+            Product = product;
             Quantity = quantity;
-            DefaultQuantity = defaultQuantity;
+        }
+
+        internal void AddQuantity(ushort quantity)
+        {
+            Quantity += quantity;
+        }
+        
+        internal void SetQuantity(ushort quantity)
+        {
+            Quantity = quantity;
         }
     }
 }

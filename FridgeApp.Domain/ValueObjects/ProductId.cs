@@ -3,11 +3,11 @@ using FridgeApp.Domain.Exceptions;
 
 namespace FridgeApp.Domain.ValueObjects
 {
-    public record Id
+    public record ProductId
     {
         public Guid Value { get; }
 
-        public Id(Guid value)
+        public ProductId(Guid value)
         {
             if (value == Guid.Empty)
             {
@@ -16,10 +16,10 @@ namespace FridgeApp.Domain.ValueObjects
             Value = value;  
         }
         
-        public static implicit operator Guid(Id id)
+        public static implicit operator Guid(ProductId id)
             => id.Value;
 
-        public static implicit operator Id(Guid id)
+        public static implicit operator ProductId(Guid id)
             => new(id);
     }
 }

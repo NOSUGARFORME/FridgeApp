@@ -4,7 +4,7 @@ using FridgeApp.Shared.Abstractions.Domain;
 
 namespace FridgeApp.Domain.Events
 {
-    public record FridgeProductOrderedEvent(Fridge Fridge, FridgeProduct FridgeProduct) : IDomainEvent
+    public record ProductOrderedEvent(Fridge Fridge, Product Product) : IDomainEvent
     {
     }
 }

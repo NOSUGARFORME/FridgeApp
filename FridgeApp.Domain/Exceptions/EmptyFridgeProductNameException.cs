@@ -2,9 +2,9 @@ using FridgeApp.Shared.Abstractions.Exceptions;
 
 namespace FridgeApp.Domain.Exceptions
 {
-    public class EmptyFridgeProductNameException : FridgeException
+    public class EmptyProductNameException : FridgeException
     {
-        public EmptyFridgeProductNameException() : base("Fridge product name cannot be empty.")
+        public EmptyProductNameException() : base("Product name cannot be empty.")
         {
         }
     }

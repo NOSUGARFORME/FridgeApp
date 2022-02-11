@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FridgeApp.Domain.Events;
-using FridgeApp.Domain.Exceptions;
 using FridgeApp.Domain.ValueObjects;
 using FridgeApp.Shared.Abstractions.Domain;
 
@@ -25,50 +24,42 @@ namespace FridgeApp.Domain.Entities
             _modelName = fridgeModel;
         }
         
-        private Fridge(FridgeId id, FridgeName name, FridgeOwnerName ownerName, FridgeModel modelName, LinkedList<FridgeProduct> products)
+        private Fridge(FridgeId id, FridgeName name, FridgeOwnerName ownerName, 
+            FridgeModel modelName, IEnumerable<Product> products)
             : this(id, name, ownerName, modelName)
         {
-            _products = products;
+            AddProductsWithDefaultQuantity(products);
         }
 
-        public void AddProduct(FridgeProduct product)
+        public void AddProduct(Product product, ProductQuantity quantity)
         {
-            var alreadyExists = _products.Any(p => p.Name == product.Name);
-
-            if (alreadyExists)
+            if (_products.All(p => p.ProductId.Equals(product.Id)))
             {
-                throw new FridgeProductAlreadyExistsException(_name, product.Name);
+                _products.AddLast(new FridgeProduct(this, product, quantity));
+                AddEvent(new ProductAdded(this, product, quantity));
+                return;
             }
 
-            _products.AddLast(product);
-            AddEvent(new FridgeProductAdded(this, product));
+            var existingProduct = _products.SingleOrDefault(p => p.ProductId.Equals(product.Id));
+            existingProduct?.AddQuantity(quantity);
+      
+            AddEvent(new ProductAdded(this, product, quantity));
         }
 
-        public void AddProducts(IEnumerable<FridgeProduct> products)
+        public void AddProductsWithDefaultQuantity(IEnumerable<Product> products)
         {
             foreach (var product in products)
             {
-                AddProduct(product);
+                AddProduct(product, product.DefaultQuantity);
             }
         }
         
-        public void RemoveFridgeProduct(string productName)
+        public void RemoveProduct(Product product)
         {
-            var product = GetProduct(productName);
-            _products.Remove(product);
-            AddEvent(new FridgeProductRemovedEvent(this, product));
-        }
-
-        private FridgeProduct GetProduct(string productName)
-        {
-            var product = _products.SingleOrDefault(p => p.Name == productName);
-
-            if (product is null)
-            {
-                throw new FridgeProductNotFoundException(productName);
-            }
-
-            return product;
+            var fridgeProduct = _products.SingleOrDefault(fp => fp.ProductId == product.Id);
+            
+            _products.Remove(fridgeProduct);
+            AddEvent(new ProductRemovedEvent(this, product));
         }
     }
 }

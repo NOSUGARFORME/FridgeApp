@@ -6,7 +6,7 @@ namespace FridgeApp.Shared.Abstractions.Domain
     {
         public TKey Id { get; protected set; }
         
-        public DateTimeOffset CreatedDateTime { get; protected set; }
+        public DateTimeOffset CreatedDateTime { get; protected set; } = DateTimeOffset.Now;
         public DateTimeOffset? UpdatedDateTime { get; protected set; }
     }
 }
