@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FridgeApp.Domain\FridgeApp.Domain.csproj" />
     <ProjectReference Include="..\FridgeApp.Shared.Abstractions\FridgeApp.Shared.Abstractions.csproj" />
     <ProjectReference Include="..\FridgeApp.Shared\FridgeApp.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\External" />
   </ItemGroup>
 
 </Project>

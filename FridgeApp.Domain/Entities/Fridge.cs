@@ -54,12 +54,12 @@ namespace FridgeApp.Domain.Entities
             }
         }
         
-        public void RemoveProduct(Product product)
+        public void RemoveProduct(ProductId productId)
         {
-            var fridgeProduct = _products.SingleOrDefault(fp => fp.ProductId == product.Id);
+            var fridgeProduct = _products.SingleOrDefault(fp => fp.ProductId == productId);
             
             _products.Remove(fridgeProduct);
-            AddEvent(new ProductRemovedEvent(this, product));
+            AddEvent(new ProductRemovedEvent(this, productId));
         }
     }
 }
