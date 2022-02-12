@@ -9,6 +9,10 @@ namespace FridgeApp.Infrastructure.EF.Models
         public string Name { get; set; }
         public ushort Year { get; set; }
         
+        public int Version { get; set; }
+        public DateTimeOffset CreatedDateTime { get; set; }
+        public DateTimeOffset? UpdatedDateTime { get; set; }
+        
         public ICollection<FridgeReadModel> Fridges { get; set; }
     }
 }

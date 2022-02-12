@@ -4,7 +4,7 @@ using FridgeApp.Shared.Abstractions.Domain;
 
 namespace FridgeApp.Domain.Entities
 {
-    public class FridgeProduct : Entity<Guid>
+    public class FridgeProduct
     {
         public ProductQuantity Quantity { get; private set; }
         public ProductId ProductId { get; private set; }

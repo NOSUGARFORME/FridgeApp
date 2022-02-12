@@ -20,7 +20,6 @@ namespace FridgeApp.Infrastructure.EF.Repositories
 
         public Task<Fridge> GetAsync(FridgeId id)
             => _fridges
-                .Include(f => f.FridgeModel)
                 .Include(f => f.FridgeProducts)
                 .ThenInclude(fp => fp.Product)
                 .SingleOrDefaultAsync(f => f.Id == id);

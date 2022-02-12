@@ -87,7 +87,7 @@ namespace FridgeApp.Infrastructure.EF.Config
             builder
                 .Property(fm => fm.FridgeModelName)
                 .HasConversion(name => name.Value, name => new FridgeModelName(name))
-                .HasColumnName("FridgeModelName");
+                .HasColumnName("Name");
 
             builder
                 .Property(fm => fm.FridgeModelYear)

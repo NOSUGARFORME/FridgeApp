@@ -15,7 +15,7 @@ namespace FridgeApp.Domain.Entities
 
         public FridgeName Name => _name;
         public OwnerName OwnerName => _ownerName;
-        public FridgeModel FridgeModel { get; private set; }
+        public FridgeModel FridgeModel { get; }
         public FridgeModelId FridgeModelId { get; }
         public LinkedList<FridgeProduct> FridgeProducts => _products; 
 
@@ -38,7 +38,7 @@ namespace FridgeApp.Domain.Entities
 
         public void AddProduct(Product product, ProductQuantity quantity)
         {
-            if (_products.All(p => p.ProductId.Equals(product.Id)))
+            if (_products.Any(p => p.ProductId != product.Id))
             {
                 _products.AddLast(new FridgeProduct(this, product, quantity));
                 AddEvent(new ProductAdded(this, product, quantity));

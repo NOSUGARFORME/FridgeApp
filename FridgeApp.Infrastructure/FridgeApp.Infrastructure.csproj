@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EF\Migrations" />
+  </ItemGroup>
+
 </Project>

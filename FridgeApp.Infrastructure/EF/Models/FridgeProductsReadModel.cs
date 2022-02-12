@@ -10,6 +10,6 @@ namespace FridgeApp.Infrastructure.EF.Models
         public Guid FridgeId { get; set; }
         public FridgeReadModel Fridge { get; set; }
         
-        public uint Quantity { get; set; }
+        public int Quantity { get; set; }
     }
 }

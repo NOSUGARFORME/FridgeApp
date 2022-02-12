@@ -20,14 +20,23 @@ namespace FridgeApp.Infrastructure.EF.Queries
                 {
                     Id = fp.ProductId,
                     Name = fp.Product.Name,
-                    Quantity = fp.Quantity,
-                    DefaultQuantity = fp.Product.DefaultQuantity
+                    Quantity = (uint)fp.Quantity,
+                    DefaultQuantity = (uint)fp.Product.DefaultQuantity,
+                    Version = fp.Product.Version,
+                    CreatedDateTime = fp.Product.CreatedDateTime,
+                    UpdatedDateTime = fp.Product.UpdatedDateTime
                 }),
                 FridgeModel = new FridgeModelDto
                 {
                     Name = readModel.FridgeModel.Name,
-                    Year = readModel.FridgeModel.Year
-                }
+                    Year = readModel.FridgeModel.Year,
+                    Version = readModel.FridgeModel.Version,
+                    CreatedDateTime = readModel.FridgeModel.CreatedDateTime,
+                    UpdatedDateTime = readModel.FridgeModel.UpdatedDateTime
+                },
+                Version = readModel.Version,
+                CreatedDateTime = readModel.CreatedDateTime,
+                UpdatedDateTime = readModel.UpdatedDateTime
             };
     }
 }
