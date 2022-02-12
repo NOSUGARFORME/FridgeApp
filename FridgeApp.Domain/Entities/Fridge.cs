@@ -9,22 +9,27 @@ namespace FridgeApp.Domain.Entities
     public class Fridge : AggregateRoot<FridgeId>
     {
         private FridgeName _name;
-        private FridgeOwnerName _ownerName;
-        private FridgeModel _modelName;
+        private OwnerName _ownerName;
 
         private readonly LinkedList<FridgeProduct> _products = new();
 
+        public FridgeName Name => _name;
+        public OwnerName OwnerName => _ownerName;
+        public FridgeModel FridgeModel { get; private set; }
+        public FridgeModelId FridgeModelId { get; }
+        public LinkedList<FridgeProduct> FridgeProducts => _products; 
+
         private Fridge() { }
         
-        internal Fridge(FridgeId id, FridgeName name, FridgeOwnerName ownerName, FridgeModel fridgeModel)
+        internal Fridge(FridgeId id, FridgeName name, OwnerName ownerName, FridgeModel fridgeModel)
         {
             Id = id;
             _name = name;
             _ownerName = ownerName;
-            _modelName = fridgeModel;
+            FridgeModel = fridgeModel;
         }
         
-        private Fridge(FridgeId id, FridgeName name, FridgeOwnerName ownerName, 
+        private Fridge(FridgeId id, FridgeName name, OwnerName ownerName, 
             FridgeModel modelName, IEnumerable<Product> products)
             : this(id, name, ownerName, modelName)
         {

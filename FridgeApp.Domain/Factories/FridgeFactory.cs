@@ -6,10 +6,10 @@ namespace FridgeApp.Domain.Factories
 {
     public sealed class FridgeFactory : IFridgeFactory
     {
-        public Fridge Create(FridgeId id, FridgeName name, FridgeOwnerName ownerName, FridgeModel fridgeModel)
+        public Fridge Create(FridgeId id, FridgeName name, OwnerName ownerName, FridgeModel fridgeModel)
             => new(id, name, ownerName, fridgeModel);
 
-        public Fridge CreateWithProducts(FridgeId id, FridgeName name, FridgeOwnerName ownerName,
+        public Fridge CreateWithProducts(FridgeId id, FridgeName name, OwnerName ownerName,
             FridgeModel fridgeModel, IEnumerable<Product> products)
         {
             var fridge = Create(id, name, ownerName, fridgeModel);

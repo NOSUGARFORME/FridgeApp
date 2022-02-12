@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FridgeApp.Application;
+using FridgeApp.Infrastructure;
+using FridgeApp.Shared;
 
 namespace FridgeApp.Api
 {
@@ -26,8 +28,10 @@ namespace FridgeApp.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddShared();
             services.AddApplication();
-            
+            services.AddInfrastructure(Configuration);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

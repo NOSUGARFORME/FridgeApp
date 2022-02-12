@@ -5,6 +5,6 @@ namespace FridgeApp.Domain.Factories
 {
     public interface IFridgeFactory
     {
-        Fridge Create(FridgeId id, FridgeName name, FridgeOwnerName ownerName, FridgeModel fridgeModel);
+        Fridge Create(FridgeId id, FridgeName name, OwnerName ownerName, FridgeModel fridgeModel);
     }
 }
