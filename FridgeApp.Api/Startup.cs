@@ -48,6 +48,7 @@ namespace FridgeApp.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FridgeApp.Api v1"));
             }
 
+            app.UseShared();
             app.UseHttpsRedirection();
 
             app.UseRouting();
