@@ -38,7 +38,7 @@ namespace FridgeApp.Domain.Entities
 
         public void AddProduct(Product product, ProductQuantity quantity)
         {
-            if (_products.Any(p => p.ProductId != product.Id))
+            if (_products.All(p => p.ProductId != product.Id))
             {
                 _products.AddLast(new FridgeProduct(this, product, quantity));
                 AddEvent(new ProductAdded(this, product, quantity));
