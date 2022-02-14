@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using FridgeApp.Application.Commands;
 using FridgeApp.Application.DTOs;
@@ -21,49 +24,84 @@ namespace FridgeApp.Api.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<FridgeDto>> Get([FromRoute] GetFridge query)
+        public async Task<ActionResult<FridgeDto>> GetFridge([FromRoute] GetFridge query)
         {
             var result = await _queryDispatcher.QueryAsync(query);
             return OkOrNotFound(result);
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FridgeDto>>> Get([FromQuery] SearchFridge query)
+        public async Task<ActionResult<IEnumerable<FridgeDto>>> GetFridges([FromQuery] SearchFridge query)
+        {
+            var result = await _queryDispatcher.QueryAsync(query);
+            return OkOrNotFound(result);
+        }
+        
+        [HttpGet("{fridgeId:guid}/products")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsInFridge([FromRoute] GetFridgeProducts query)
         {
             var result = await _queryDispatcher.QueryAsync(query);
             return OkOrNotFound(result);
         }
         
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateFridge command)
+        public async Task<IActionResult> CreateFridge([FromBody] CreateFridge command)
         {
             await _commandDispatcher.DispatchAsync(command);
-            return CreatedAtAction(nameof(Get), new {id = command.Id}, null);
+            return CreatedAtAction(nameof(GetFridge), new {id = command.Id}, null);
         }
         
-        [HttpPut("{fridgeId}/products")]
-        public async Task<IActionResult> Put([FromBody] AddFridgeProduct command)
+        [HttpPut("{fridgeId:guid}/products")]
+        public async Task<IActionResult> PutProduct([FromBody] AddFridgeProduct command)
         {
             await _commandDispatcher.DispatchAsync(command);
             return Ok();
         }
         
-        [HttpPut("{fridgeId:guid}/products/{name}/addDefault")]
-        public async Task<IActionResult> Put()
+        [HttpPut("{fridgeId:guid}/products/addDefault")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> AddDefaultQuantityToMissingFridgeProducts([FromRoute] GetMissingFridgeProducts query)
         {
-            // await _commandDispatcher.DispatchAsync(command);
+            var products = await _queryDispatcher.QueryAsync(query);
+
+            foreach (var product in products)
+            {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://localhost:5001/api/fridge/{query.FridgeId}/products"); // ?
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "PUT";
+
+                await using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    var command = new AddFridgeProduct
+                    (
+                        query.FridgeId,
+                        product.Id,
+                        product.DefaultQuantity
+                    );
+                    
+                    var json = JsonSerializer.Serialize(command);
+
+                    await streamWriter.WriteAsync(json);
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = await streamReader.ReadToEndAsync();
+                }
+            }
+            
             return Ok();
         }
         
         [HttpDelete("{fridgeId:guid}/products/{productId:guid}")]
-        public async Task<IActionResult> Delete([FromBody] RemoveFridgeProduct command)
+        public async Task<IActionResult> DeleteProductInFridge([FromRoute] RemoveFridgeProduct command)
         {
             await _commandDispatcher.DispatchAsync(command);
             return Ok();
         }
         
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete([FromBody] RemoveFridge command)
+        public async Task<IActionResult> DeleteFridge([FromRoute] RemoveFridge command)
         {
             await _commandDispatcher.DispatchAsync(command);
             return Ok();

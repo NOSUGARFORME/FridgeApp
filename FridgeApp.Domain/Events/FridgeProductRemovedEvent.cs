@@ -4,5 +4,5 @@ using FridgeApp.Shared.Abstractions.Domain;
 
 namespace FridgeApp.Domain.Events
 {
-    public record ProductRemovedEvent(Fridge Fridge, ProductId ProductId) : IDomainEvent;
+    public record FridgeProductRemovedEvent(Fridge Fridge, ProductId ProductId) : IDomainEvent;
 }

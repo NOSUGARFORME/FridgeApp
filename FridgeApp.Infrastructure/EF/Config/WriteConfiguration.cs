@@ -19,21 +19,21 @@ namespace FridgeApp.Infrastructure.EF.Config
             var ownerConverter = new ValueConverter<OwnerName, string>(o => o.ToString(),
                 o => OwnerName.Create(o));
 
-            var fridgeNameConverter = new ValueConverter<FridgeName, string>(fn => fn.Value,
-                fn => new FridgeName(fn));
-
             builder
                 .Property(f => f.Id)
-                .HasConversion(id => id.Value, id => new FridgeId(id));
+                .HasConversion(id => id.Value,
+                    id => new FridgeId(id));
 
             builder
-                .Property(typeof(OwnerName), "_ownerName")
-                .HasConversion(ownerConverter)
+                .Property(f => f.OwnerName)
+                .HasConversion(on => on.ToString(),
+                    on => OwnerName.Create(on))
                 .HasColumnName("OwnerName");
 
             builder
-                .Property(typeof(FridgeName), "_name")
-                .HasConversion(fridgeNameConverter)
+                .Property(f => f.Name)
+                .HasConversion(name => name.Value, 
+                    name => new FridgeName(name))
                 .HasColumnName("Name");
             
             builder.ToTable("Fridges");
@@ -44,13 +44,16 @@ namespace FridgeApp.Infrastructure.EF.Config
             builder.HasKey(f => f.Id);
             
             builder.Property(p => p.Id)
-                .HasConversion(id => id.Value, id => new ProductId(id));
+                .HasConversion(id => id.Value,
+                    id => new ProductId(id));
 
             builder.Property(p => p.Name)
-                .HasConversion(pn => pn.Value, pn => new ProductName(pn));
+                .HasConversion(pn => pn.Value,
+                    pn => new ProductName(pn));
             
             builder.Property(p => p.DefaultQuantity)
-                .HasConversion(dq => dq.Value, dq => new ProductQuantity(dq));
+                .HasConversion(dq => dq.Value,
+                    dq => new ProductQuantity(dq));
             
             builder.ToTable("Products");
         }
@@ -82,16 +85,19 @@ namespace FridgeApp.Infrastructure.EF.Config
 
             builder
                 .Property(fm => fm.Id)
-                .HasConversion(id => id.Value, id => new FridgeModelId(id));
+                .HasConversion(id => id.Value,
+                    id => new FridgeModelId(id));
 
             builder
                 .Property(fm => fm.FridgeModelName)
-                .HasConversion(name => name.Value, name => new FridgeModelName(name))
+                .HasConversion(name => name.Value,
+                    name => new FridgeModelName(name))
                 .HasColumnName("Name");
 
             builder
                 .Property(fm => fm.FridgeModelYear)
-                .HasConversion(year => year.Value, year => new FridgeModelYear(year))
+                .HasConversion(year => year.Value,
+                    year => new FridgeModelYear(year))
                 .HasColumnName("Year");
             
             builder.HasMany(fm => fm.Fridges)

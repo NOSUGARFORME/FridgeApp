@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +15,7 @@ namespace FridgeApp.Shared.Abstractions.Domain
         {
             if (_events.Any() || _versionIncremented) return;
             Version++;
+            UpdatedDateTime = DateTimeOffset.Now;
             _versionIncremented = true;
                 
             _events.Add(@event);
@@ -31,6 +33,7 @@ namespace FridgeApp.Shared.Abstractions.Domain
             }
 
             Version++;
+            UpdatedDateTime = DateTimeOffset.Now;
             _versionIncremented = true;
         }
     }

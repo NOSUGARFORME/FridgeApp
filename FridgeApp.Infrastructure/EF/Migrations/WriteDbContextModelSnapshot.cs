@@ -4,16 +4,14 @@ using FridgeApp.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FridgeApp.Infrastructure.EF.Migrations
 {
-    [DbContext(typeof(ReadDbContext))]
-    [Migration("20220212211745_Init_Read")]
-    partial class Init_Read
+    [DbContext(typeof(WriteDbContext))]
+    partial class WriteDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,67 +20,24 @@ namespace FridgeApp.Infrastructure.EF.Migrations
                 .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.FridgeModelReadModel", b =>
+            modelBuilder.Entity("FridgeApp.Domain.Entities.Fridge", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("CreatedDateTime")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("UpdatedDateTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FridgeModels");
-                });
-
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.FridgeProductsReadModel", b =>
-                {
-                    b.Property<Guid>("FridgeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("FridgeId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("FridgeProducts");
-                });
-
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.FridgeReadModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("CreatedDateTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid>("FridgeModelId")
+                    b.Property<Guid?>("FridgeModelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
 
                     b.Property<string>("OwnerName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("OwnerName");
 
                     b.Property<DateTimeOffset?>("UpdatedDateTime")
                         .HasColumnType("datetimeoffset");
@@ -97,16 +52,60 @@ namespace FridgeApp.Infrastructure.EF.Migrations
                     b.ToTable("Fridges");
                 });
 
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.ProductReadModel", b =>
+            modelBuilder.Entity("FridgeApp.Domain.Entities.FridgeModel", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("CreatedDateTime")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("DefaultQuantity")
+                    b.Property<string>("FridgeModelName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<ushort?>("FridgeModelYear")
+                        .HasColumnType("int")
+                        .HasColumnName("Year");
+
+                    b.Property<DateTimeOffset?>("UpdatedDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FridgeModels");
+                });
+
+            modelBuilder.Entity("FridgeApp.Domain.Entities.FridgeProduct", b =>
+                {
+                    b.Property<Guid>("FridgeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<ushort?>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("FridgeId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("FridgeProducts");
+                });
+
+            modelBuilder.Entity("FridgeApp.Domain.Entities.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<ushort?>("DefaultQuantity")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -123,15 +122,24 @@ namespace FridgeApp.Infrastructure.EF.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.FridgeProductsReadModel", b =>
+            modelBuilder.Entity("FridgeApp.Domain.Entities.Fridge", b =>
                 {
-                    b.HasOne("FridgeApp.Infrastructure.EF.Models.FridgeReadModel", "Fridge")
-                        .WithMany("Products")
+                    b.HasOne("FridgeApp.Domain.Entities.FridgeModel", "FridgeModel")
+                        .WithMany("Fridges")
+                        .HasForeignKey("FridgeModelId");
+
+                    b.Navigation("FridgeModel");
+                });
+
+            modelBuilder.Entity("FridgeApp.Domain.Entities.FridgeProduct", b =>
+                {
+                    b.HasOne("FridgeApp.Domain.Entities.Fridge", "Fridge")
+                        .WithMany("FridgeProducts")
                         .HasForeignKey("FridgeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FridgeApp.Infrastructure.EF.Models.ProductReadModel", "Product")
+                    b.HasOne("FridgeApp.Domain.Entities.Product", "Product")
                         .WithMany("FridgeProducts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -142,28 +150,17 @@ namespace FridgeApp.Infrastructure.EF.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.FridgeReadModel", b =>
+            modelBuilder.Entity("FridgeApp.Domain.Entities.Fridge", b =>
                 {
-                    b.HasOne("FridgeApp.Infrastructure.EF.Models.FridgeModelReadModel", "FridgeModel")
-                        .WithMany("Fridges")
-                        .HasForeignKey("FridgeModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FridgeModel");
+                    b.Navigation("FridgeProducts");
                 });
 
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.FridgeModelReadModel", b =>
+            modelBuilder.Entity("FridgeApp.Domain.Entities.FridgeModel", b =>
                 {
                     b.Navigation("Fridges");
                 });
 
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.FridgeReadModel", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("FridgeApp.Infrastructure.EF.Models.ProductReadModel", b =>
+            modelBuilder.Entity("FridgeApp.Domain.Entities.Product", b =>
                 {
                     b.Navigation("FridgeProducts");
                 });

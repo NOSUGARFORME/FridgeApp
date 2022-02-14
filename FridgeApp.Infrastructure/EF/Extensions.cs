@@ -21,6 +21,8 @@ namespace FridgeApp.Infrastructure.EF
             
             services.AddScoped<IFridgeReadService, FridgeReadService>();
             services.AddScoped<IProductReadService, ProductReadService>();
+
+            services.AddScoped<IFridgeWriteService, FridgeWriteService>();
             
             var option = configuration.GetOptions<SqlServerOptions>("SqlServer");
             services.AddDbContext<ReadDbContext>(ctx =>

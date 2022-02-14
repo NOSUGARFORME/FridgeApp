@@ -14,6 +14,7 @@ namespace FridgeApp.Shared.Exceptions
             {
                 await next(context);
             }
+            // TODO: Add handling other errors
             catch (FridgeException ex)
             {
                 context.Response.StatusCode = 400;

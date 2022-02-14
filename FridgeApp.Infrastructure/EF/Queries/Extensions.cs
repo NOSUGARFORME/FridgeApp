@@ -16,12 +16,12 @@ namespace FridgeApp.Infrastructure.EF.Queries
                     FirstName = readModel.OwnerName?.FirstName,
                     LastName = readModel.OwnerName?.LastName
                 },
-                Products = readModel.Products.Select(fp => new ProductInFridgeDto
+                Products = readModel.Products.Select(fp => new FridgeProductDto
                 {
                     Id = fp.ProductId,
                     Name = fp.Product.Name,
-                    Quantity = (uint)fp.Quantity,
-                    DefaultQuantity = (uint)fp.Product.DefaultQuantity,
+                    Quantity = fp.Quantity,
+                    DefaultQuantity = fp.Product.DefaultQuantity,
                     Version = fp.Product.Version,
                     CreatedDateTime = fp.Product.CreatedDateTime,
                     UpdatedDateTime = fp.Product.UpdatedDateTime

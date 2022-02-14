@@ -8,24 +8,19 @@ namespace FridgeApp.Domain.Entities
 {
     public class Fridge : AggregateRoot<FridgeId>
     {
-        private FridgeName _name;
-        private OwnerName _ownerName;
-
-        private readonly LinkedList<FridgeProduct> _products = new();
-
-        public FridgeName Name => _name;
-        public OwnerName OwnerName => _ownerName;
-        public FridgeModel FridgeModel { get; }
-        public FridgeModelId FridgeModelId { get; }
-        public LinkedList<FridgeProduct> FridgeProducts => _products; 
+        public FridgeName Name { get; private set; }
+        public OwnerName OwnerName { get; private set; }
+        public FridgeModel FridgeModel { get; private set; }
+        public FridgeModelId FridgeModelId { get; private set; }
+        public LinkedList<FridgeProduct> FridgeProducts { get; private set; } = new();
 
         private Fridge() { }
         
         internal Fridge(FridgeId id, FridgeName name, OwnerName ownerName, FridgeModel fridgeModel)
         {
             Id = id;
-            _name = name;
-            _ownerName = ownerName;
+            Name = name;
+            OwnerName = ownerName;
             FridgeModel = fridgeModel;
         }
         
@@ -38,17 +33,17 @@ namespace FridgeApp.Domain.Entities
 
         public void AddProduct(Product product, ProductQuantity quantity)
         {
-            if (_products.All(p => p.ProductId != product.Id))
+            if (FridgeProducts.All(p => p.ProductId != product.Id))
             {
-                _products.AddLast(new FridgeProduct(this, product, quantity));
-                AddEvent(new ProductAdded(this, product, quantity));
+                FridgeProducts.AddLast(new FridgeProduct(this, product, quantity));
+                AddEvent(new FridgeProductAdded(this, product, quantity));
                 return;
             }
 
-            var existingProduct = _products.SingleOrDefault(p => p.ProductId.Equals(product.Id));
+            var existingProduct = FridgeProducts.SingleOrDefault(p => p.ProductId.Equals(product.Id));
             existingProduct?.AddQuantity(quantity);
       
-            AddEvent(new ProductAdded(this, product, quantity));
+            AddEvent(new FridgeProductAdded(this, product, quantity));
         }
 
         public void AddProductsWithDefaultQuantity(IEnumerable<Product> products)
@@ -61,10 +56,10 @@ namespace FridgeApp.Domain.Entities
         
         public void RemoveProduct(ProductId productId)
         {
-            var fridgeProduct = _products.SingleOrDefault(fp => fp.ProductId == productId);
+            var fridgeProduct = FridgeProducts.SingleOrDefault(fp => fp.ProductId == productId);
             
-            _products.Remove(fridgeProduct);
-            AddEvent(new ProductRemovedEvent(this, productId));
+            FridgeProducts.Remove(fridgeProduct);
+            AddEvent(new FridgeProductRemovedEvent(this, productId));
         }
     }
 }

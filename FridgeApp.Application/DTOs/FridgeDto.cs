@@ -12,7 +12,7 @@ namespace FridgeApp.Application.DTOs
         public DateTimeOffset CreatedDateTime { get; set; }
         public DateTimeOffset? UpdatedDateTime { get; set; }
         public OwnerNameDto OwnerName { get; set; }
-        public IEnumerable<ProductInFridgeDto> Products { get; set; }
+        public IEnumerable<FridgeProductDto> Products { get; set; }
         public FridgeModelDto FridgeModel { get; set; }
     }
 }

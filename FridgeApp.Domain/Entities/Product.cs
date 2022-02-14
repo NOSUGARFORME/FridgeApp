@@ -6,8 +6,8 @@ namespace FridgeApp.Domain.Entities
 {
     public class Product : AggregateRoot<ProductId>
     {
-        public ProductName Name { get; protected set; }
-        public ProductQuantity DefaultQuantity { get; protected set; }
+        public ProductName Name { get; private set; }
+        public ProductQuantity DefaultQuantity { get; private set; }
         
         public IList<FridgeProduct> FridgeProducts { get; private set; }
 
