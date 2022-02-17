@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text.Json;
 using System.Threading.Tasks;
 using FridgeApp.Application.Commands;
 using FridgeApp.Application.DTOs;
@@ -55,7 +52,7 @@ namespace FridgeApp.Api.Controllers
         public async Task<IActionResult> PutProduct([FromBody] AddFridgeProduct command)
         {
             await _commandDispatcher.DispatchAsync(command);
-            return Ok();
+            return NoContent();
         }
         
         [HttpPut("{fridgeId:guid}/products/addDefault")]
@@ -65,32 +62,12 @@ namespace FridgeApp.Api.Controllers
 
             foreach (var product in products)
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://localhost:5001/api/fridge/{query.FridgeId}/products"); // ?
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "PUT";
-
-                await using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                {
-                    var command = new AddFridgeProduct
-                    (
-                        query.FridgeId,
-                        product.Id,
-                        product.DefaultQuantity
-                    );
-                    
-                    var json = JsonSerializer.Serialize(command);
-
-                    await streamWriter.WriteAsync(json);
-                }
-
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = await streamReader.ReadToEndAsync();
-                }
+                var command =
+                    new AddDefaultQuantityToMissingFridgeProducts(query.FridgeId, product.Id, product.DefaultQuantity);
+                await _commandDispatcher.DispatchAsync(command);
             }
             
-            return Ok();
+            return NoContent();
         }
         
         [HttpDelete("{fridgeId:guid}/products/{productId:guid}")]

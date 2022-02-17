@@ -1,5 +1,8 @@
+using System;
+using FridgeApp.Application.Services;
 using FridgeApp.Infrastructure.EF;
 using FridgeApp.Infrastructure.Logging;
+using FridgeApp.Infrastructure.Services;
 using FridgeApp.Shared.Abstractions.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using FridgeApp.Shared.Queries;
@@ -11,6 +14,11 @@ namespace FridgeApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddHttpClient<IProductClientService, ProductClientService>("product", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:5001/");
+            });
+
             services.AddSqlServer(configuration);
             services.AddQueries();
 
