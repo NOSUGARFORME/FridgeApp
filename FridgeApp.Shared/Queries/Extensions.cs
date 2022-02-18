@@ -6,6 +6,9 @@ namespace FridgeApp.Shared.Queries
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Extension method for enabling <see cref="IQuery"/>.
+        /// </summary>
         public static IServiceCollection AddQueries(this IServiceCollection services)
         {
             var assembly = Assembly.GetCallingAssembly();

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.EF.Services
 {
+    /// <summary>
+    /// Implement read methods for <see cref="FridgeReadModel"/>. 
+    /// </summary>
     internal sealed class FridgeReadService : IFridgeReadService
     {
         private readonly DbSet<FridgeReadModel> _fridge;
@@ -13,6 +16,7 @@ namespace FridgeApp.Infrastructure.EF.Services
         public FridgeReadService(ReadDbContext context)
             => _fridge = context.Fridges;
         
+        /// <inheritdoc />
         public Task<bool> ExistsByNameAsync(string name)
             => _fridge.AnyAsync(f => f.Name == name);
     }

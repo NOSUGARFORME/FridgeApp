@@ -13,6 +13,9 @@ namespace FridgeApp.Infrastructure.EF
 {
     internal static class Extensions
     {
+        /// <summary>
+        /// Extension method for add database access services.
+        /// </summary>
         public static IServiceCollection AddSqlServer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IFridgeRepository, FridgeRepository>();

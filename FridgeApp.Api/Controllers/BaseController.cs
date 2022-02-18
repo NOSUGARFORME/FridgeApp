@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FridgeApp.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/{version:apiVersion}/[controller]")]
     public abstract class BaseController : ControllerBase
     {
         protected ActionResult<TResult> OkOrNotFound<TResult>(TResult result)

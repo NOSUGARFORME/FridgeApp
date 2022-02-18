@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using FridgeApp.Application.Commands;
 using FridgeApp.Application.Services;
 using FridgeApp.Domain.Entities;
 using FridgeApp.Domain.ValueObjects;
@@ -9,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.EF.Services
 {
+    /// <summary>
+    /// Implements write methods for <see cref="Fridge"/> 
+    /// </summary>
     public class FridgeWriteService : IFridgeWriteService
     {
         private readonly DbSet<Fridge> _fridges;
@@ -22,6 +24,7 @@ namespace FridgeApp.Infrastructure.EF.Services
             _fridges = writeDbContext.Fridges;
         }
         
+        /// <inheritdoc />
         public async Task RemoveProduct(FridgeId fridgeId, ProductId productId)
         {
             var productToRemove = await _products

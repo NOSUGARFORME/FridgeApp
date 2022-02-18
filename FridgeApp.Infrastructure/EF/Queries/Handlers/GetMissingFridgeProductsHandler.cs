@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FridgeApp.Application.DTOs;
 using FridgeApp.Application.Queries;
-using FridgeApp.Application.Services;
 using FridgeApp.Infrastructure.EF.Contexts;
 using FridgeApp.Infrastructure.EF.Models;
 using FridgeApp.Shared.Abstractions.Queries;

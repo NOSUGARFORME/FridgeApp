@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using FridgeApp.Application.Exceptions;
 using FridgeApp.Application.Services;
-using FridgeApp.Domain.Exceptions;
 using FridgeApp.Domain.Factories;
 using FridgeApp.Domain.Repositories;
 using FridgeApp.Shared.Abstractions.Commands;

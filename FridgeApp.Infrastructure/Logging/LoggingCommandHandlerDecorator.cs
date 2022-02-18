@@ -1,10 +1,13 @@
-using System;
 using System.Threading.Tasks;
 using FridgeApp.Shared.Abstractions.Commands;
 using Microsoft.Extensions.Logging;
 
 namespace FridgeApp.Infrastructure.Logging
 {
+    /// <summary>
+    /// Command logger decorator.
+    /// </summary>
+    /// <typeparam name="TCommand">The type of the command witch needs to handle.</typeparam>
     internal sealed class LoggingCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand> 
         where TCommand : class, ICommand
     {

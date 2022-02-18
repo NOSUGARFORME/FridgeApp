@@ -8,6 +8,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace FridgeApp.Shared.Services
 {
+    /// <summary>
+    /// Implements auto-migrations for EF
+    /// </summary>
     internal sealed class AppInitializer : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
