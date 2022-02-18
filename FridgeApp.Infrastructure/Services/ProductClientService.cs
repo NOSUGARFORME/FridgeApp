@@ -13,7 +13,9 @@ namespace FridgeApp.Infrastructure.Services
         private readonly HttpClient _client;
 
         public ProductClientService(HttpClient client)
-            => _client = client;
+        {
+            _client = client;
+        }
         
         public async Task PutProduct(Guid fridgeId, Guid productId, ushort quantity)
         {
