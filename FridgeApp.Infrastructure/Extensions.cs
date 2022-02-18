@@ -16,7 +16,7 @@ namespace FridgeApp.Infrastructure
         {
             services.AddHttpClient<IProductClientService, ProductClientService>("product", client =>
             {
-                client.BaseAddress = new Uri("https://localhost:5001/");
+                client.BaseAddress = new Uri(configuration["ProductApi:BaseUrl"]);
             });
 
             services.AddSqlServer(configuration);
