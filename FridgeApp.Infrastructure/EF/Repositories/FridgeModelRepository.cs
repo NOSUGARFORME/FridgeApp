@@ -7,9 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.EF.Repositories
 {
-    /// <summary>
-    /// Implements write methods for <see cref="FridgeModel"/>. 
-    /// </summary>
+    /// <inheritdoc />
     internal sealed class FridgeModelRepository : IFridgeModelRepository
     {
         private readonly DbSet<FridgeModel> _fridgeModels;

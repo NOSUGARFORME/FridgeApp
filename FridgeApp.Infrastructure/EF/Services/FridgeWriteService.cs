@@ -8,10 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.EF.Services
 {
-    /// <summary>
-    /// Implements write methods for <see cref="Fridge"/> 
-    /// </summary>
-    public class FridgeWriteService : IFridgeWriteService
+    /// <inheritdoc />
+    internal sealed class FridgeWriteService : IFridgeWriteService
     {
         private readonly DbSet<Fridge> _fridges;
         private readonly DbSet<Product> _products;

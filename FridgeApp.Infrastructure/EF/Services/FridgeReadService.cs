@@ -6,9 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.EF.Services
 {
-    /// <summary>
-    /// Implement read methods for <see cref="FridgeReadModel"/>. 
-    /// </summary>
+    /// <inheritdoc />
     internal sealed class FridgeReadService : IFridgeReadService
     {
         private readonly DbSet<FridgeReadModel> _fridge;

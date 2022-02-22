@@ -11,9 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.EF.Services
 {
-    /// <summary>
-    /// Implement read service for <see cref="Product"/> 
-    /// </summary>
+    /// <inheritdoc />
     internal sealed class ProductReadService : IProductReadService
     {
         private readonly DbSet<ProductReadModel> _product;
