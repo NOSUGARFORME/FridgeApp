@@ -25,12 +25,14 @@ namespace FridgeApp.Api
             services.AddShared();
             services.AddApplication();
             services.AddInfrastructure(Configuration);
-            
+           
             services.AddApiVersioning(o => {
                 o.ReportApiVersions = true;
                 o.AssumeDefaultVersionWhenUnspecified = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
             });
+
+            services.AddHttpClient();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

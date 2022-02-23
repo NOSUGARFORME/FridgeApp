@@ -15,6 +15,7 @@ namespace FridgeApp.Application
             services.AddSingleton<IFridgeModelFactory, FridgeModelFactory>();
             services.AddSingleton<IProductFactory, ProductFactory>();
             services.AddCommands();
+            
             return services;
         }
     }
