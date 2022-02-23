@@ -7,6 +7,9 @@ namespace FridgeApp.Shared
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Extension method for enabling Shared services.
+        /// </summary>
         public static IServiceCollection AddShared(this IServiceCollection services)
         {
             services.AddHostedService<AppInitializer>();
@@ -14,6 +17,9 @@ namespace FridgeApp.Shared
             return services;
         }
 
+        /// <summary>
+        /// Extension method for use Shared middlewares.
+        /// </summary>
         public static IApplicationBuilder UseShared(this IApplicationBuilder app)
         {
             app.UseMiddleware<ExceptionMiddleware>();

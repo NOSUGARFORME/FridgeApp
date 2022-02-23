@@ -32,7 +32,7 @@ namespace FridgeApp.Application.Commands.Handlers
             {
                 throw new FridgeAlreadyExistsException(name);
             }
-            
+
             var fridgeModel = await _fridgeModelRepository.GetAsync(fridgeModelId);
 
             if (fridgeModel is null)

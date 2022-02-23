@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace FridgeApp.Shared.Abstractions.Domain
 {
+    /// <summary>
+    /// Aggregate root.
+    /// </summary>
+    /// <typeparam name="TKey">Type of unique identifier.</typeparam>
     public abstract class AggregateRoot<TKey> : Entity<TKey>
     {
         public int Version { get; protected set; }
@@ -11,6 +15,10 @@ namespace FridgeApp.Shared.Abstractions.Domain
         
         private readonly List<IDomainEvent> _events = new();
 
+        /// <summary>
+        /// Adds <see cref="IDomainEvent"/> and update fields.
+        /// </summary>
+        /// <param name="event"><see cref="IDomainEvent"/>.</param>
         protected void AddEvent(IDomainEvent @event)
         {
             if (_events.Any() || _versionIncremented) return;
@@ -20,7 +28,7 @@ namespace FridgeApp.Shared.Abstractions.Domain
                 
             _events.Add(@event);
         }
-
+        
         public void ClearEvents() => _events.Clear();
         
         private bool _versionIncremented;

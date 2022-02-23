@@ -12,6 +12,9 @@ namespace FridgeApp.Infrastructure
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Extension method for add Infrastructure services.
+        /// </summary>
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddHttpClient<IProductClientService, ProductClientService>("product", client =>

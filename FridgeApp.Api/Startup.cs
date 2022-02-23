@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using FridgeApp.Application;
 using FridgeApp.Infrastructure;
 using FridgeApp.Shared;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FridgeApp.Api
 {
@@ -24,6 +25,13 @@ namespace FridgeApp.Api
             services.AddShared();
             services.AddApplication();
             services.AddInfrastructure(Configuration);
+           
+            services.AddApiVersioning(o => {
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+
             services.AddHttpClient();
 
             services.AddControllers();

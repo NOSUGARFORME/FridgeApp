@@ -6,6 +6,9 @@ namespace FridgeApp.Shared.Commands
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Extension method for enabling <see cref="ICommand"/>.
+        /// </summary>
         public static IServiceCollection AddCommands(this IServiceCollection services)
         {
             var assembly = Assembly.GetCallingAssembly();

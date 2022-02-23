@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.EF.Repositories
 {
-    public class FridgeModelRepository : IFridgeModelRepository
+    /// <inheritdoc />
+    internal sealed class FridgeModelRepository : IFridgeModelRepository
     {
         private readonly DbSet<FridgeModel> _fridgeModels;
         private readonly WriteDbContext _writeDbContext;
@@ -18,21 +19,25 @@ namespace FridgeApp.Infrastructure.EF.Repositories
             _fridgeModels = writeDbContext.FridgeModels;
         }
 
+        /// <inheritdoc />
         public Task<FridgeModel> GetAsync(FridgeModelId id)
             => _fridgeModels.FirstOrDefaultAsync(f => f.Id == id);
 
+        /// <inheritdoc />
         public async Task AddAsync(FridgeModel fridgeModel)
         {
             await _fridgeModels.AddAsync(fridgeModel);
             await _writeDbContext.SaveChangesAsync();
         }
-
+        
+        /// <inheritdoc />
         public async Task UpdateAsync(FridgeModel fridgeModel)
         {
             _fridgeModels.Update(fridgeModel);
             await _writeDbContext.SaveChangesAsync();
         }
 
+        /// <inheritdoc />
         public async Task DeleteAsync(FridgeModel fridgeModel)
         {
             _fridgeModels.Remove(fridgeModel);

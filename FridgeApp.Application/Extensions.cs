@@ -6,6 +6,9 @@ namespace FridgeApp.Application
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Extension method for add Application services.
+        /// </summary>
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddSingleton<IFridgeFactory, FridgeFactory>();
