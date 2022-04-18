@@ -1,6 +1,6 @@
 namespace FridgeApp.Infrastructure.EF.Options
 {
-    public class SqlServerOptions
+    public class DbOptions
     {
         public string ConnectionString { get; set; }
     }

@@ -1,4 +1,4 @@
-dotnet tool install --global dotnet-ef --version="5.0"
+dotnet tool install --global dotnet-ef --version="6.0"
 
 dotnet ef migrations add <name> --context ReadDbContext --startup-project ../FridgeApp.Api/ -o EF/Migrations
 dotnet ef migrations add <name> --context WriteDbContext --startup-project ../FridgeApp.Api/ -o EF/Migrations

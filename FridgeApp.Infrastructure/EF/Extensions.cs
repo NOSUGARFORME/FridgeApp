@@ -27,11 +27,11 @@ namespace FridgeApp.Infrastructure.EF
 
             services.AddScoped<IFridgeWriteService, FridgeWriteService>();
             
-            var option = configuration.GetOptions<SqlServerOptions>("SqlServer");
+            var option = configuration.GetOptions<DbOptions>("Db");
             services.AddDbContext<ReadDbContext>(ctx =>
-                ctx.UseSqlServer(option.ConnectionString));
+                ctx.UseNpgsql(option.ConnectionString));
             services.AddDbContext<WriteDbContext>(ctx =>
-                ctx.UseSqlServer(option.ConnectionString));
+                ctx.UseNpgsql(option.ConnectionString));
             
             return services;
         }
