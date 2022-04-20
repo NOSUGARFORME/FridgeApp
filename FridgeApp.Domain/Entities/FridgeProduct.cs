@@ -19,12 +19,12 @@ namespace FridgeApp.Domain.Entities
             Quantity = quantity;
         }
 
-        internal void AddQuantity(ushort quantity)
+        internal void AddQuantity(int quantity)
         {
             Quantity += quantity;
         }
         
-        internal void SetQuantity(ushort quantity)
+        internal void SetQuantity(int quantity)
         {
             Quantity = quantity;
         }

@@ -5,6 +5,6 @@ namespace FridgeApp.Application.Services
 {
     public interface IProductClientService
     {
-        Task PutProduct(Guid fridgeId, Guid productId, ushort quantity);
+        Task PutProduct(Guid fridgeId, Guid productId, int quantity);
     }
 }

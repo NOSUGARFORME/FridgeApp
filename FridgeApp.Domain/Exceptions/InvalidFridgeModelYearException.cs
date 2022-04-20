@@ -4,7 +4,7 @@ namespace FridgeApp.Domain.Exceptions
 {
     public class InvalidFridgeModelYearException : FridgeException
     {
-        public InvalidFridgeModelYearException(ushort year) 
+        public InvalidFridgeModelYearException(int year) 
             : base($"Value '{year}' is invalid year.")
         {
         }

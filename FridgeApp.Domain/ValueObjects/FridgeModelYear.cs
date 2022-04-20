@@ -5,9 +5,9 @@ namespace FridgeApp.Domain.ValueObjects
 {
     public record FridgeModelYear
     {
-        public ushort Value { get; }
+        public int Value { get; }
 
-        public FridgeModelYear(ushort value)
+        public FridgeModelYear(int value)
         {
             if (value < 1970 || value > DateTime.Today.Year)
             {
@@ -18,10 +18,10 @@ namespace FridgeApp.Domain.ValueObjects
         }
         
         
-        public static implicit operator ushort(FridgeModelYear year)
+        public static implicit operator int(FridgeModelYear year)
             => year.Value;
 
-        public static implicit operator FridgeModelYear(ushort year)
+        public static implicit operator FridgeModelYear(int year)
             => new(year);
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using FridgeApp.Application.Services;
-using FridgeApp.Infrastructure.EF;
 using FridgeApp.Infrastructure.Logging;
+using FridgeApp.Infrastructure.Persistence;
 using FridgeApp.Infrastructure.Services;
 using FridgeApp.Shared.Abstractions.Commands;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +22,7 @@ namespace FridgeApp.Infrastructure
                 client.BaseAddress = new Uri(configuration["ProductApi:BaseUrl"]);
             });
 
-            services.AddSqlServer(configuration);
+            services.AddPersistence(configuration);
             services.AddQueries();
 
             services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>));
