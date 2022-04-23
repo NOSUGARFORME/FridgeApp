@@ -30,7 +30,7 @@ namespace FridgeApp.Application.Commands.Handlers
                 throw new FridgeNotFoundException(fridgeId);
             }
 
-            if (fridge.FridgeProducts.All(fp => fp.ProductId.Value != productId))
+            if (fridge.FridgeProducts.All(fp => fp.Product.Id.Value != productId))
             {
                 throw new ProductNotFoundInFridgeException(fridgeId, productId);
             }

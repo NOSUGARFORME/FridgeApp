@@ -50,4 +50,15 @@ internal static class Extensions
             CreatedDateTime = readModel.CreatedDateTime,
             UpdatedDateTime = readModel.UpdatedDateTime
         };
+    
+    public static FridgeModelDto AsDto(this FridgeModelReadModel readModel)
+        => new()
+        {
+            Id = readModel.Id,
+            Name = readModel.Name,
+            Year = readModel.Year,
+            Version = readModel.Version,
+            CreatedDateTime = readModel.CreatedDateTime,
+            UpdatedDateTime = readModel.UpdatedDateTime
+        };
 }

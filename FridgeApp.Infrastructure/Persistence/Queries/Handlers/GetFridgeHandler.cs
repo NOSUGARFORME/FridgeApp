@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.Persistence.Queries.Handlers;
 
-internal class GetFridgeHandler : IQueryHandler<GetFridge, FridgeDto>
+internal sealed class GetFridgeHandler : IQueryHandler<GetFridge, FridgeDto>
 {
     private readonly DbSet<FridgeReadModel> _fridges;
 

@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FridgeApp.Shared", "FridgeA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FridgeApp.Shared.Abstractions", "FridgeApp.Shared.Abstractions\FridgeApp.Shared.Abstractions.csproj", "{387DC4F9-9966-4890-9182-0D4A98E795DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{31337C5D-04A0-4A14-8A91-125201F12955}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FridgeApp.UnitTests", "tests\FridgeApp.UnitTests\FridgeApp.UnitTests.csproj", "{B11A0F80-4938-40BF-8F3A-C1D27E6341BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{387DC4F9-9966-4890-9182-0D4A98E795DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{387DC4F9-9966-4890-9182-0D4A98E795DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{387DC4F9-9966-4890-9182-0D4A98E795DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B11A0F80-4938-40BF-8F3A-C1D27E6341BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B11A0F80-4938-40BF-8F3A-C1D27E6341BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B11A0F80-4938-40BF-8F3A-C1D27E6341BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B11A0F80-4938-40BF-8F3A-C1D27E6341BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +69,7 @@ Global
 		{5A805658-F61F-4504-A729-4A96B1AF6853} = {D40D1B94-3056-4108-BF25-4A25737FAE7F}
 		{8398B059-4DBA-4822-8E68-9D763E5D74CB} = {5A805658-F61F-4504-A729-4A96B1AF6853}
 		{387DC4F9-9966-4890-9182-0D4A98E795DE} = {5A805658-F61F-4504-A729-4A96B1AF6853}
+		{B11A0F80-4938-40BF-8F3A-C1D27E6341BC} = {31337C5D-04A0-4A14-8A91-125201F12955}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FBF209F-ED73-4835-A168-073D72071A7A}

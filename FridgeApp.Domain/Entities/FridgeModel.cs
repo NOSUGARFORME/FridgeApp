@@ -10,7 +10,7 @@ namespace FridgeApp.Domain.Entities
         public FridgeModelYear FridgeModelYear { get; private set; }
         public ICollection<Fridge> Fridges { get; private set; }
 
-        internal FridgeModel(FridgeModelId id, FridgeModelName fridgeModelName, FridgeModelYear year)
+        public FridgeModel(FridgeModelId id, FridgeModelName fridgeModelName, FridgeModelYear year)
         {
             Id = id;
             FridgeModelName = fridgeModelName;

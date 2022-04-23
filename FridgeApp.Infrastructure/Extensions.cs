@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using FridgeApp.Application.Services;
 using FridgeApp.Infrastructure.Logging;
 using FridgeApp.Infrastructure.Persistence;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using FridgeApp.Shared.Queries;
 using Microsoft.Extensions.Configuration;
 
+[assembly: InternalsVisibleTo("FridgeApp.UnitTests")]
 namespace FridgeApp.Infrastructure
 {
     public static class Extensions
