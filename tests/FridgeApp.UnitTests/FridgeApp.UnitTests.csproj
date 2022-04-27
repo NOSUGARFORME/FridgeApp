@@ -26,8 +26,4 @@
       <ProjectReference Include="..\..\FridgeApp.Infrastructure\FridgeApp.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Infrastructure\Persistence\Services" />
-    </ItemGroup>
-
 </Project>

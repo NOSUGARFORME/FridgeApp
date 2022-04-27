@@ -5,7 +5,6 @@ using FridgeApp.Domain.Events;
 using FridgeApp.Domain.ValueObjects;
 using FridgeApp.Shared.Abstractions.Domain;
 
-[assembly: InternalsVisibleTo("FridgeApp.UnitTests")]
 namespace FridgeApp.Domain.Entities
 {
     public class Fridge : AggregateRoot<FridgeId>

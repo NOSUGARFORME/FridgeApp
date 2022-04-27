@@ -23,17 +23,19 @@ public class CreateFridgeHandlerTests
     private readonly ICommandHandler<CreateFridge> _commandHandler;
     private readonly IFridgeRepository _repository;
     private readonly IFridgeModelRepository _fridgeModelRepository;
-    private readonly IFridgeFactory _factory;
+    private readonly IFridgeFactory _fridgeFactory;
+    private readonly IFridgeModelFactory _fridgeModelFactory;
     private readonly IFridgeReadService _readService;
 
     public CreateFridgeHandlerTests()
     {
         _repository = Substitute.For<IFridgeRepository>();
-        _factory = Substitute.For<IFridgeFactory>();
+        _fridgeFactory = Substitute.For<IFridgeFactory>();
         _readService = Substitute.For<IFridgeReadService>();
         _fridgeModelRepository = Substitute.For<IFridgeModelRepository>();
         
-        _commandHandler = new CreateFridgeHandler(_repository, _factory, _readService, _fridgeModelRepository);
+        _commandHandler = new CreateFridgeHandler(_repository, _fridgeFactory, _readService, _fridgeModelRepository);
+        _fridgeModelFactory = new FridgeModelFactory();
     }
 
     #endregion
@@ -71,8 +73,8 @@ public class CreateFridgeHandlerTests
         
         _readService.ExistsByNameAsync(command.Name).Returns(false);
         _fridgeModelRepository.GetAsync(Arg.Any<FridgeModelId>())
-            .Returns(new FridgeModel(Guid.NewGuid(), "Name", 2022));
-        _factory.Create(command.Id, command.Name, Arg.Any<OwnerName>(), Arg.Any<FridgeModel>()).Returns(default(Fridge));
+            .Returns(_fridgeModelFactory.Create(Guid.NewGuid(), "Name", 2022));
+        _fridgeFactory.Create(command.Id, command.Name, Arg.Any<OwnerName>(), Arg.Any<FridgeModel>()).Returns(default(Fridge));
         
         var exception = await Record.ExceptionAsync(() => Act(command));
         

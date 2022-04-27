@@ -13,17 +13,21 @@ public class FridgeTests
 {
     #region ARRANGE
 
-    private readonly IFridgeFactory _factory;
+    private readonly IFridgeFactory _fridgeFactory;
+    private readonly IFridgeModelFactory _fridgeModelFactory;
+    private readonly IProductFactory _productFactory;
 
     public FridgeTests()
     {
-        _factory = new FridgeFactory();
+        _fridgeModelFactory = new FridgeModelFactory();
+        _productFactory = new ProductFactory();
+        _fridgeFactory = new FridgeFactory();
     }
 
     private Fridge GetFridge()
     {
-        var fridgeModel = new FridgeModel(Guid.NewGuid(), "Name", 2022);
-        var fridge = _factory.Create(Guid.NewGuid(), "FridgeName", new OwnerName("FirstName", "LastName"), fridgeModel);
+        var fridgeModel = _fridgeModelFactory.Create(Guid.NewGuid(), "FridgeModel 1", 2000);
+        var fridge = _fridgeFactory.Create(Guid.NewGuid(), "FridgeName", new OwnerName("FirstName", "LastName"), fridgeModel);
         fridge.ClearEvents();
         return fridge;
     }
@@ -34,8 +38,9 @@ public class FridgeTests
     public void AddProduct_Adds_ProductAdded_Domain_Event_On_Success()
     {
         var fridge = GetFridge();
-           
-        var exception = Record.Exception(() => fridge.AddProduct(new Product(Guid.NewGuid(), "Product 1", 1), 2));
+        var product = _productFactory.Create(Guid.NewGuid(), "Product 1", 3);
+        
+        var exception = Record.Exception(() => fridge.AddProduct(product, 2));
 
         exception.ShouldBeNull();
         fridge.Events.Count().ShouldBe(1);
@@ -50,7 +55,7 @@ public class FridgeTests
     public void AddProduct_Adds_Product_Witch_Already_Exists_ProductAdded_Domain_Event_On_Success()
     {
         var fridge = GetFridge();
-        var product = new Product(Guid.NewGuid(), "Product 1", 1);
+        var product = _productFactory.Create(Guid.NewGuid(), "Product 1", 1);
         
         var exception = Record.Exception(() =>
         {
@@ -66,7 +71,7 @@ public class FridgeTests
         @event.ShouldNotBeNull();
         @event.Product.Name.ShouldBe(new ProductName("Product 1"));
         @event.Fridge.FridgeProducts.SingleOrDefault(fp => fp.Product.Id == product.Id).ShouldNotBeNull();
-        @event.Fridge.FridgeProducts.SingleOrDefault(fp => fp.Product.Id == product.Id).Quantity.ShouldBe(new ProductQuantity(6));
+        @event.Fridge.FridgeProducts.SingleOrDefault(fp => fp.Product.Id == product.Id)!.Quantity.ShouldBe(new ProductQuantity(6));
     }
     
     
@@ -74,7 +79,7 @@ public class FridgeTests
     public void RemoveProduct_Adds_FridgeProductRemovedEvent_Domain_Event_On_Success()
     {
         var fridge = GetFridge();
-        var product = new Product(Guid.NewGuid(), "Product 1", 1);
+        var product = _productFactory.Create(Guid.NewGuid(), "Product 1", 1);
         fridge.AddProduct(product, 2);
         fridge.ClearEvents();
         

@@ -4,6 +4,7 @@ using FridgeApp.Application.Commands;
 using FridgeApp.Application.Commands.Handlers;
 using FridgeApp.Domain.Entities;
 using FridgeApp.Domain.Exceptions;
+using FridgeApp.Domain.Factories;
 using FridgeApp.Domain.Repositories;
 using FridgeApp.Domain.ValueObjects;
 using FridgeApp.Shared.Abstractions.Commands;
@@ -21,10 +22,14 @@ public class RemoveProductHandlerTests
     private readonly IProductRepository _productRepository;
     private readonly ICommandHandler<RemoveProduct> _commandHandler;
 
+    private readonly IProductFactory _productFactory;
+
     public RemoveProductHandlerTests()
     {
         _productRepository = Substitute.For<IProductRepository>();
         _commandHandler = new RemoveProductHandler(_productRepository);
+
+        _productFactory = new ProductFactory();
     }
 
     #endregion
@@ -44,7 +49,7 @@ public class RemoveProductHandlerTests
     [Fact]
     public async Task HandleAsync_Calls_Repository_On_Success()
     {
-        var product = new Product(Guid.NewGuid(), "Name", 1);
+        var product = _productFactory.Create(Guid.NewGuid(), "Name", 1);
         var command = new RemoveProduct(product.Id);
         
         _productRepository.GetAsync(Arg.Any<ProductId>()).Returns(product);

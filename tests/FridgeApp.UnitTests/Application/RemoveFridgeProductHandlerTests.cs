@@ -7,6 +7,7 @@ using FridgeApp.Application.Exceptions;
 using FridgeApp.Application.Services;
 using FridgeApp.Domain.Entities;
 using FridgeApp.Domain.Exceptions;
+using FridgeApp.Domain.Factories;
 using FridgeApp.Domain.Repositories;
 using FridgeApp.Domain.ValueObjects;
 using FridgeApp.Shared.Abstractions.Commands;
@@ -24,12 +25,20 @@ public class RemoveFridgeProductHandlerTests
     private readonly IFridgeRepository _repository;
     private readonly IFridgeWriteService _writeService;
     private readonly ICommandHandler<RemoveFridgeProduct> _commandHandler;
-
+    
+    private readonly IProductFactory _productFactory;
+    private readonly IFridgeModelFactory _fridgeModelFactory;
+    private readonly IFridgeFactory _fridgeFactory;
+    
     public RemoveFridgeProductHandlerTests()
     {
         _repository = Substitute.For<IFridgeRepository>();
         _writeService = Substitute.For<IFridgeWriteService>();
         _commandHandler = new RemoveFridgeProductHandler(_repository, _writeService);
+
+        _productFactory = new ProductFactory();
+        _fridgeModelFactory = new FridgeModelFactory();
+        _fridgeFactory = new FridgeFactory();
     }
 
     #endregion
@@ -63,7 +72,7 @@ public class RemoveFridgeProductHandlerTests
     public async Task HandleAsync_Calls_Repository_On_Success()
     {
         var fridge = CreateTestFridge();
-        var command = new RemoveFridgeProduct(Guid.NewGuid(), fridge.FridgeProducts.First.Value.Product.Id);
+        var command = new RemoveFridgeProduct(Guid.NewGuid(), fridge.FridgeProducts.First?.Value.Product.Id);
         
         _repository.GetAsync(Arg.Any<FridgeId>()).Returns(fridge);
        
@@ -76,19 +85,19 @@ public class RemoveFridgeProductHandlerTests
     private Task Act(RemoveFridgeProduct command)
         => _commandHandler.HandleAsync(command);
 
-    private static Fridge CreateTestFridge()
+    private Fridge CreateTestFridge()
     {
         var products = new List<Product>
         {
-            new(Guid.NewGuid(), "Name0", 0),
-            new(Guid.NewGuid(), "Name1", 1),
-            new(Guid.NewGuid(), "Name2", 2),
-            new(Guid.NewGuid(), "Name3", 3),
+            _productFactory.Create(Guid.NewGuid(), "Name0", 0),
+            _productFactory.Create(Guid.NewGuid(), "Name1", 1),
+            _productFactory.Create(Guid.NewGuid(), "Name2", 2),
+            _productFactory.Create(Guid.NewGuid(), "Name3", 3),
         };
 
-        var fridgeModel = new FridgeModel(Guid.NewGuid(), "ModelName", 2022);
+        var fridgeModel = _fridgeModelFactory.Create(Guid.NewGuid(), "ModelName", 2022);
 
-        var fridge = new Fridge(Guid.NewGuid(), "FridgeName", new OwnerName("Owner", "Name"), fridgeModel);
+        var fridge = _fridgeFactory.Create(Guid.NewGuid(), "FridgeName", new OwnerName("Owner", "Name"), fridgeModel);
         fridge.AddProductsWithDefaultQuantity(products);
         
         return fridge;
