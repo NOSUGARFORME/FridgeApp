@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FridgeApp.Api.Controllers;
 
+[ApiVersion("1.0")]
 public class ProductController : BaseController
 {
     private readonly ICommandDispatcher _commandDispatcher;
