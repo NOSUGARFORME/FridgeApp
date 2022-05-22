@@ -8,6 +8,8 @@ services:
       - "8000:80"
     depends_on:
       - db
+    environment:
+      - ConnectionStrings__ConnectionString=Username=postgres;Password=postgres;Database=FridgeApp;Host=db;Port=5432
   db:
     image: postgres
     ports:

@@ -1,10 +1,12 @@
 using FridgeApp.Domain.Entities;
+using FridgeApp.Infrastructure.Identity;
 using FridgeApp.Infrastructure.Persistence.Config;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.Persistence.Contexts;
 
-internal sealed class WriteDbContext : DbContext
+internal sealed class WriteDbContext : IdentityDbContext<User>
 {
     public DbSet<Fridge> Fridges { get; set; }
     public DbSet<Product> Products { get; set; }
@@ -18,6 +20,7 @@ internal sealed class WriteDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         var configuration = new WriteConfiguration();
             
         modelBuilder.ApplyConfiguration<Fridge>(configuration);
