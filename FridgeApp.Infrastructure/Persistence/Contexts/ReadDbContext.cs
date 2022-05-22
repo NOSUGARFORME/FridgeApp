@@ -1,10 +1,12 @@
+using FridgeApp.Infrastructure.Identity;
 using FridgeApp.Infrastructure.Persistence.Config;
 using FridgeApp.Infrastructure.Persistence.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FridgeApp.Infrastructure.Persistence.Contexts;
 
-internal sealed class ReadDbContext : DbContext
+internal sealed class ReadDbContext : IdentityDbContext<User>
 {
     public DbSet<FridgeReadModel> Fridges { get; set; }
     public DbSet<ProductReadModel> Products { get; set; }
@@ -17,6 +19,7 @@ internal sealed class ReadDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         var configuration = new ReadConfiguration();
             
         modelBuilder.ApplyConfiguration<FridgeReadModel>(configuration);

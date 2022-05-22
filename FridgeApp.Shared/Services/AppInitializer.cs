@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,12 +23,12 @@ namespace FridgeApp.Shared.Services
         {
             var dbContextTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
-                .Where(a => typeof(DbContext).IsAssignableFrom(a) && !a.IsInterface && a != typeof(DbContext));
+                .Where(a => typeof(IdentityDbContext).IsAssignableFrom(a) && !a.IsInterface && a != typeof(IdentityDbContext));
 
             using var scope = _serviceProvider.CreateScope();
             foreach (var dbContextType in dbContextTypes)
             {
-                if (scope.ServiceProvider.GetRequiredService(dbContextType) is not DbContext dbContext)
+                if (scope.ServiceProvider.GetRequiredService(dbContextType) is not IdentityDbContext dbContext)
                 {
                     continue;
                 }

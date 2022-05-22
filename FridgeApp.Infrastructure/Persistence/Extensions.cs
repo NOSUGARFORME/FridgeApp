@@ -1,5 +1,6 @@
 using FridgeApp.Application.Services;
 using FridgeApp.Domain.Repositories;
+using FridgeApp.Infrastructure.Identity;
 using FridgeApp.Infrastructure.Persistence.Contexts;
 using FridgeApp.Infrastructure.Persistence.Options;
 using FridgeApp.Infrastructure.Persistence.Repositories;
@@ -28,7 +29,9 @@ internal static class Extensions
         services.AddScoped<IProductReadService, ProductReadService>();
 
         services.AddScoped<IFridgeWriteService, FridgeWriteService>();
-            
+
+        services.AddAuth(configuration);
+
         var option = configuration.GetOptions<DbOptions>("ConnectionStrings");
         services.AddDbContext<ReadDbContext>(ctx =>
             ctx.UseNpgsql(option.ConnectionString));
