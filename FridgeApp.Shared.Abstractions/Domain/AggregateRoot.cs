@@ -21,11 +21,12 @@ namespace FridgeApp.Shared.Abstractions.Domain
         /// <param name="event"><see cref="IDomainEvent"/>.</param>
         protected void AddEvent(IDomainEvent @event)
         {
-            if (_events.Any() || _versionIncremented) return;
-            Version++;
-            UpdatedDateTime = DateTimeOffset.Now;
-            _versionIncremented = true;
-                
+            if (!_events.Any() && !_versionIncremented)
+            {
+                Version++;
+                _versionIncremented = true;
+            }
+
             _events.Add(@event);
         }
         

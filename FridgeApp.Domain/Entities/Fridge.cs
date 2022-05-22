@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using FridgeApp.Domain.Events;
 using FridgeApp.Domain.ValueObjects;
 using FridgeApp.Shared.Abstractions.Domain;
@@ -33,14 +34,14 @@ namespace FridgeApp.Domain.Entities
 
         public void AddProduct(Product product, ProductQuantity quantity)
         {
-            if (FridgeProducts.All(p => p.ProductId != product.Id))
+            if (FridgeProducts.All(p => p.Product.Id != product.Id))
             {
                 FridgeProducts.AddLast(new FridgeProduct(this, product, quantity));
                 AddEvent(new FridgeProductAdded(this, product, quantity));
                 return;
             }
 
-            var existingProduct = FridgeProducts.SingleOrDefault(p => p.ProductId.Equals(product.Id));
+            var existingProduct = FridgeProducts.SingleOrDefault(p => p.Product.Id.Equals(product.Id));
             existingProduct?.AddQuantity(quantity);
       
             AddEvent(new FridgeProductAdded(this, product, quantity));
@@ -56,7 +57,7 @@ namespace FridgeApp.Domain.Entities
         
         public void RemoveProduct(ProductId productId)
         {
-            var fridgeProduct = FridgeProducts.SingleOrDefault(fp => fp.ProductId == productId);
+            var fridgeProduct = FridgeProducts.SingleOrDefault(fp => fp.Product.Id == productId);
             
             FridgeProducts.Remove(fridgeProduct);
             AddEvent(new FridgeProductRemovedEvent(this, productId));

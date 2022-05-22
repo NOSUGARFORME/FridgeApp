@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FridgeApp.Api.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/{version:apiVersion}/[controller]")]
     public abstract class BaseController : ControllerBase
     {

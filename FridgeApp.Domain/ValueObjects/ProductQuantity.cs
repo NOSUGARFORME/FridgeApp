@@ -1,11 +1,11 @@
 namespace FridgeApp.Domain.ValueObjects
 {
-    public record ProductQuantity(ushort Value)
+    public record ProductQuantity(int Value)
     {
-        public static implicit operator ushort(ProductQuantity quantity)
+        public static implicit operator int(ProductQuantity quantity)
             => quantity.Value;
 
-        public static implicit operator ProductQuantity(ushort quantity)
+        public static implicit operator ProductQuantity(int quantity)
             => new(quantity);
     }
 }

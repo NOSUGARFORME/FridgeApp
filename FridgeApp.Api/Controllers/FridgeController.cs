@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace FridgeApp.Api.Controllers
 {
     [ApiVersion("1.0")]
-    [Produces("application/json")]
     public class FridgeController : BaseController
     {
         private readonly ICommandDispatcher _commandDispatcher;

@@ -17,13 +17,13 @@ namespace FridgeApp.Infrastructure.Services
             _client = client;
         }
         
-        public async Task PutProduct(Guid fridgeId, Guid productId, ushort quantity)
+        public async Task PutProduct(Guid fridgeId, Guid productId, int quantity)
         {
             var command = new AddFridgeProduct(fridgeId, productId, quantity);
             var json = JsonSerializer.Serialize(command);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             
-            await _client.PutAsync($"api/Fridge/{fridgeId}/products", content);
+            await _client.PutAsync($"Fridge/{fridgeId}/products", content);
         }
     }
 }
